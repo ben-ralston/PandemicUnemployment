@@ -13,7 +13,7 @@ import imageio
 
 
 def main():
-    filenames = [join('IntermediateOutput', 'map_%d.tiff' % i)
+    filenames = [join('intermediate_output', 'map_%d.tiff' % i)
                  for i in range(1, 10)]
     images = []
 

@@ -21,8 +21,8 @@ def unemployment():
     cleaned_df = unemployment_reformat_data(base_df)
 
     output_name = 'unemployment_by_state.csv'
-    output_path = join('IntermediateOutput', output_name)
-    output_directory = join(getcwd(), 'IntermediateOutput')
+    output_path = join('intermediate_output', output_name)
+    output_directory = join(getcwd(), 'intermediate_output')
     cleaned_df.to_csv(output_path, index_label='fips')
 
     print('Created %s in the following directory:\n%s\n' % (output_name, output_directory))
@@ -30,7 +30,7 @@ def unemployment():
 
 def unemployment_read_excel():
     filename = 'ststdnsadata.xlsx'
-    file_path = join('Data', filename)
+    file_path = join('data', filename)
     col_names = ['FIPS Code', 'State', 'Year', 'Month', 'Civilian Population',
                  'Civilian Labor Force', 'Percent of Population',
                  'Total Employment', 'Percent Employment', 'Total Unemployment',
@@ -154,8 +154,8 @@ def covid():
             merged.loc[row, current_date] *= 100000 / population
 
     output_name = 'monthly_covid_cases_by_state.csv'
-    output_path = join('IntermediateOutput', output_name)
-    output_directory = join(getcwd(), 'IntermediateOutput')
+    output_path = join('intermediate_output', output_name)
+    output_directory = join(getcwd(), 'intermediate_output')
     merged.to_csv(output_path, index=False)
 
     print('Created %s in the following directory:\n%s' % (output_name, output_directory))
@@ -163,7 +163,7 @@ def covid():
 
 def covid_read_csv():
     filename = 'United_States_COVID-19_Cases_and_Deaths_by_State_over_Time.csv'
-    file_path = join('Data', filename)
+    file_path = join('data', filename)
     raw_df = pd.read_csv(file_path)
 
     raw_df['submission_date'] = pd.to_datetime(raw_df['submission_date'])
@@ -228,7 +228,7 @@ def covid_reformat_data(raw_df):
 
 def read_state_population_csv():
     filename = 'nst-est2019-alldata.csv'
-    file_path = join('Data', filename)
+    file_path = join('data', filename)
     raw_df = pd.read_csv(file_path)
 
     trimmed_df = pd.DataFrame({'State': raw_df['NAME'],
@@ -238,7 +238,7 @@ def read_state_population_csv():
 
 def read_state_centers_csv():
     filename = 'states.csv'
-    file_path = join('Data', filename)
+    file_path = join('data', filename)
     raw_df = pd.read_csv(file_path)
 
     # Only looking at states so we remove Puerto Rico:

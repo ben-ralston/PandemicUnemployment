@@ -14,8 +14,8 @@ library(maptools)
 library(rgdal)
 
 # Load the datasets we made in Python:
-unemployment <- read.csv(file.path("IntermediateOutput", "unemployment_by_state.csv"))
-covid <- read.csv(file.path("IntermediateOutput", "monthly_covid_cases_by_state.csv"))
+unemployment <- read.csv(file.path("intermediate_output", "unemployment_by_state.csv"))
+covid <- read.csv(file.path("intermediate_output", "monthly_covid_cases_by_state.csv"))
 
 # Adjusts latitude/longitude for displaying on map:
 covid_transformed <- usmap_transform(covid)
@@ -46,7 +46,7 @@ for (month in 1:9) {
   names(monthly_df)[1] <- "cases_per_capita"
 
   output_name <- sprintf("map_%d.tiff", month)
-  output_path <- file.path("IntermediateOutput", output_name)
+  output_path <- file.path("intermediate_output", output_name)
   
   # Saves plot to TIFF format instead of displaying it to us:
   tiff(output_path, units="in", width=8, height=5, res=400)
