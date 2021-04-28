@@ -7,11 +7,14 @@ Description: This script reads nine TIFF files named map_#.tiff (where
 Pandemic_Unemployment.gif, an animated GIF.
 """
 
+from os.path import join
+
 import imageio
 
 
 def main():
-    filenames = ['map_%d.tiff' % i for i in range(1, 10)]
+    filenames = [join('IntermediateOutput', 'map_%d.tiff' % i)
+                 for i in range(1, 10)]
     images = []
 
     for filename in filenames:

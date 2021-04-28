@@ -7,8 +7,10 @@ United_States_COVID-19_Cases_and_Deaths_by_State_over_Time.csv, states.csv,
 and nst-est2019-alldata.csv, and converts them into two CSV files,
 unemployment_by_state.csv and monthly_covid_cases_by_state.csv.
 """
+
 from datetime import date
 from os import getcwd
+from os.path import join
 
 import pandas as pd
 import numpy as np
@@ -19,18 +21,22 @@ def unemployment():
     cleaned_df = unemployment_reformat_data(base_df)
 
     output_name = 'unemployment_by_state.csv'
-    cleaned_df.to_csv(output_name, index_label='fips')
-    print('Created %s in the following directory:\n%s\n' % (output_name, getcwd()))
+    output_path = join('IntermediateOutput', output_name)
+    output_directory = join(getcwd(), 'IntermediateOutput')
+    cleaned_df.to_csv(output_path, index_label='fips')
+
+    print('Created %s in the following directory:\n%s\n' % (output_name, output_directory))
 
 
 def unemployment_read_excel():
     filename = 'ststdnsadata.xlsx'
+    file_path = join('Data', filename)
     col_names = ['FIPS Code', 'State', 'Year', 'Month', 'Civilian Population',
                  'Civilian Labor Force', 'Percent of Population',
                  'Total Employment', 'Percent Employment', 'Total Unemployment',
                  'Percent Unemployment']
 
-    raw_df = pd.read_excel(filename, names=col_names)
+    raw_df = pd.read_excel(file_path, names=col_names)
 
     rows_to_drop = [i for i in range(7)]
     raw_df.drop(labels=rows_to_drop, inplace=True)
@@ -148,13 +154,17 @@ def covid():
             merged.loc[row, current_date] *= 100000 / population
 
     output_name = 'monthly_covid_cases_by_state.csv'
-    merged.to_csv(output_name, index=False)
-    print('Created %s in the following directory:\n%s' % (output_name, getcwd()))
+    output_path = join('IntermediateOutput', output_name)
+    output_directory = join(getcwd(), 'IntermediateOutput')
+    merged.to_csv(output_path, index=False)
+
+    print('Created %s in the following directory:\n%s' % (output_name, output_directory))
 
 
 def covid_read_csv():
     filename = 'United_States_COVID-19_Cases_and_Deaths_by_State_over_Time.csv'
-    raw_df = pd.read_csv(filename)
+    file_path = join('Data', filename)
+    raw_df = pd.read_csv(file_path)
 
     raw_df['submission_date'] = pd.to_datetime(raw_df['submission_date'])
 
@@ -218,7 +228,8 @@ def covid_reformat_data(raw_df):
 
 def read_state_population_csv():
     filename = 'nst-est2019-alldata.csv'
-    raw_df = pd.read_csv(filename)
+    file_path = join('Data', filename)
+    raw_df = pd.read_csv(file_path)
 
     trimmed_df = pd.DataFrame({'State': raw_df['NAME'],
                                'Population': raw_df['POPESTIMATE2019']})
@@ -227,7 +238,8 @@ def read_state_population_csv():
 
 def read_state_centers_csv():
     filename = 'states.csv'
-    raw_df = pd.read_csv(filename)
+    file_path = join('Data', filename)
+    raw_df = pd.read_csv(file_path)
 
     # Only looking at states so we remove Puerto Rico:
     pr_ind = list(raw_df['state'] == 'PR').index(True)
