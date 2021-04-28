@@ -9,8 +9,8 @@ unemployment_by_state.csv and monthly_covid_cases_by_state.csv.
 """
 
 from datetime import date
-from os import getcwd
-from os.path import join
+from os import getcwd, mkdir
+from os.path import join, exists
 
 import pandas as pd
 import numpy as np
@@ -252,7 +252,14 @@ def read_state_centers_csv():
     return trimmed_df
 
 
+def make_inter_dir():
+    dir_name = 'intermediate_output'
+    if not exists(dir_name):
+        mkdir(dir_name)
+
+
 def main():
+    make_inter_dir()
     unemployment()
     covid()
 
